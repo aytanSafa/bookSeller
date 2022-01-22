@@ -1,5 +1,6 @@
 package com.library.bookseller.book;
 
+import com.library.bookseller.entity.Author;
 import com.library.bookseller.entity.Categories;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,16 +23,20 @@ public class BookDAO {
     @Column(name = "book_name")
     private String bookName;
 
-    @Column(name = "author")
-    private String author;
+    @Column(name = "quantity")
+    private int quantity;
 
     @Column(name = "price")
     private double price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author",nullable = false)
+    private Author author;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id",nullable = false)
     private Categories category;
-
 
 
 

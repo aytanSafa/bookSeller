@@ -24,7 +24,7 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "updated_at",length = 10)
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
-    @Column(name = "status")
+    @Column(name = "updatedBy")
     private String updatedBy;
 
 
