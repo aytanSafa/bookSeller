@@ -39,6 +39,6 @@ public class UsersDAO  extends BaseEntity {
     @Column(name = "age")
     private int age;
 
-    
+
 
 }
