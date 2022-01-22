@@ -1,20 +1,20 @@
 package com.library.bookseller.users;
 
+import com.library.bookseller.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.Tables;
-
 import javax.persistence.*;
 
 @Entity
-@Tables(value = "Users")
+@Table(name = "Users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Users {
+
+public class UsersDAO  extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,12 @@ public class Users {
     @Column(name = "surname")
     private String surname;
 
-    @Column(name = "")
+    @Column(name = "adress")
+    private String adress;
 
+    @Column(name = "age")
+    private int age;
+
+    
 
 }
