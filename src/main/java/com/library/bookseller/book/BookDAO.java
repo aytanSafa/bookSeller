@@ -1,7 +1,9 @@
 package com.library.bookseller.book;
 
-import com.library.bookseller.entity.Author;
-import com.library.bookseller.entity.Categories;
+import com.library.bookseller.author.Author;
+import com.library.bookseller.categories.Categories;
+import com.library.bookseller.entity.BaseEntity;
+import com.library.bookseller.users.UsersDAO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +15,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookDAO {
+public class BookDAO extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +32,7 @@ public class BookDAO {
     private double price;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author",nullable = false)
+    @JoinColumn(name = "author_id",nullable = false)
     private Author author;
 
 
@@ -38,6 +40,9 @@ public class BookDAO {
     @JoinColumn(name = "category_id",nullable = false)
     private Categories category;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users_id",nullable = false)
+    private UsersDAO users;
 
 
 }

@@ -1,6 +1,7 @@
-package com.library.bookseller.entity;
+package com.library.bookseller.author;
 
 import com.library.bookseller.book.BookDAO;
+import com.library.bookseller.entity.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -14,7 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @ToString
-public class Author extends BaseEntity{
+public class Author extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

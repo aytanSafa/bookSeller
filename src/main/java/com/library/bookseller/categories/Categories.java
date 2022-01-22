@@ -1,4 +1,4 @@
-package com.library.bookseller.entity;
+package com.library.bookseller.categories;
 
 import com.library.bookseller.book.BookDAO;
 import lombok.AllArgsConstructor;

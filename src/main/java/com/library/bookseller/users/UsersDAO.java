@@ -1,11 +1,15 @@
 package com.library.bookseller.users;
 
+import com.library.bookseller.balance.BalanceDAO;
+import com.library.bookseller.book.BookDAO;
 import com.library.bookseller.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Users")
@@ -39,6 +43,12 @@ public class UsersDAO  extends BaseEntity {
     @Column(name = "age")
     private int age;
 
+    @Column(name = "email")
+    private String email;
 
+    @OneToOne(mappedBy = "users")
+    private BalanceDAO balance;
 
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<BookDAO> books = new ArrayList<>();
 }
