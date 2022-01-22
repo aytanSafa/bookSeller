@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @ToString
-public class Author extends BaseEntity {
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +24,7 @@ public class Author extends BaseEntity {
 
     @Column(name = "author_name")
     private String authorName;
+
 
     @OneToMany(mappedBy = "author")
     private List<BookDAO> books = new ArrayList<>();

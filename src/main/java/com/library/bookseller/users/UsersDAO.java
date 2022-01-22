@@ -49,6 +49,6 @@ public class UsersDAO  extends BaseEntity {
     @OneToOne(mappedBy = "users")
     private BalanceDAO balance;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "users")
     private List<BookDAO> books = new ArrayList<>();
 }
