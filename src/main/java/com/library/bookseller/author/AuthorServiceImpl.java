@@ -42,6 +42,7 @@ public class AuthorServiceImpl implements AuthorService{
     @Override
     public ResponseType save(Models<?> request) {
        Author author = (Author) request.getObj();
+
        if(repository.findAuthorByAuthorName(author.getAuthorName()) == null){
            repository.save(author);
        }
@@ -57,6 +58,17 @@ public class AuthorServiceImpl implements AuthorService{
     public ResponseType delete(long id) {
         return null;
     }
+
+    @Override
+    public ResponseType delete(String name) {
+
+       if(repository.findAuthorByAuthorName(name) == null) {
+           buildException(AuthorServiceException.Exception.AUTHOR_NOT_FOUND);
+       }
+        repository.deleteAuthorByAuthorName(name);
+        return new ResponseType("deleted") ;
+    }
+
     private BookSellerException buildException(AuthorServiceException.Exception exception, Object... params) {
         return new AuthorServiceException(exception.getMessage(), exception.getHttpStatus());
     }

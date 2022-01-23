@@ -1,9 +1,11 @@
 package com.library.bookseller.model;
 
+
 public class Models <T> {
 
-    T obj;
-    Models(T obj) {
+    private T obj;
+
+    public Models(T obj) {
         this.obj = obj;
     }
 

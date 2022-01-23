@@ -11,5 +11,7 @@ public interface Services {
 
     ResponseType delete(long id);
 
+    ResponseType delete(String name);
+
 
 }
