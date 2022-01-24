@@ -35,7 +35,7 @@ public class CategoriesServiceImpl implements CategoriesService{
     }
 
     @Override
-    public CategoriesDto getCategory(String name) {
+    public CategoriesDto getCategoryDto(String name) {
         Categories categories = repository.findCategoriesByCategoryName(name);
         if(categories == null){
             throw buildException(CategoriesServiceException.Exception.CATEGORY_NOT_FOUND);
@@ -44,11 +44,27 @@ public class CategoriesServiceImpl implements CategoriesService{
     }
 
     @Override
-    public CategoriesDto getCategory(long id) {
+    public CategoriesDto getCategoryDto(long id) {
         Categories categories = repository.findById(id).orElseThrow(
                 () -> buildException(CategoriesServiceException.Exception.CATEGORY_NOT_FOUND)
         );
         return mapper.map(categories,CategoriesDto.class);
+    }
+
+    @Override
+    public Categories getCategory(String name) {
+        Categories categories = repository.findCategoriesByCategoryName(name);
+        if(categories == null){
+            throw buildException(CategoriesServiceException.Exception.CATEGORY_NOT_FOUND);
+        }
+        return categories;
+    }
+
+    @Override
+    public Categories getCategory(long id) {
+        return   repository.findById(id).orElseThrow(
+                () -> buildException(CategoriesServiceException.Exception.CATEGORY_NOT_FOUND)
+        );
     }
 
     @Override

@@ -21,7 +21,7 @@ public class AuthorServiceImpl implements AuthorService{
     }
 
     @Override
-    public AuthorDto getAuthor(String name) {
+    public AuthorDto getAuthorDto(String name) {
         Author author = repository.findAuthorByAuthorName(name);
         if(author == null){
             throw buildException(AuthorServiceException.Exception.AUTHOR_NOT_FOUND);
@@ -30,11 +30,27 @@ public class AuthorServiceImpl implements AuthorService{
     }
 
     @Override
-    public AuthorDto getAuthor(long id) {
+    public Author getAuthor(String name) {
+        Author author = repository.findAuthorByAuthorName(name);
+        if(author == null){
+            throw buildException(AuthorServiceException.Exception.AUTHOR_NOT_FOUND);
+        }
+        return author;
+    }
+
+    @Override
+    public AuthorDto getAuthorDto(long id) {
         Author author = repository.findById(id).orElseThrow(
                 () -> buildException(AuthorServiceException.Exception.AUTHOR_NOT_FOUND)
         );
         return mapper.map(author,AuthorDto.class);
+    }
+
+    @Override
+    public Author getAuthor(long id) {
+        return    repository.findById(id).orElseThrow(
+                () -> buildException(AuthorServiceException.Exception.AUTHOR_NOT_FOUND)
+        );
     }
 
     @Override

@@ -8,7 +8,9 @@ public interface AuthorService extends Services {
 
     ResponseType save(Author author);
     ResponseType update(Author author);
-    AuthorDto getAuthor (String name);
-    AuthorDto getAuthor(long id);
+    AuthorDto getAuthorDto (String name);
+    Author getAuthor(String name);
+    AuthorDto getAuthorDto(long id);
+    Author getAuthor(long id);
 
 }

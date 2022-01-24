@@ -2,6 +2,7 @@ package com.library.bookseller.author;
 
 import com.library.bookseller.book.BookDAO;
 import com.library.bookseller.entity.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -14,6 +15,7 @@ import java.util.List;
 @Table(name = "Author")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class Author {
 
