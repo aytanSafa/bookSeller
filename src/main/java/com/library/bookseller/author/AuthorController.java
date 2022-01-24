@@ -1,5 +1,6 @@
 package com.library.bookseller.author;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,10 +10,12 @@ import org.springframework.web.bind.annotation.*;
 public class AuthorController {
 
     private final AuthorService service;
+    private final ModelMapper mapper;
 
     @Autowired
-    public AuthorController(AuthorService service) {
+    public AuthorController(AuthorService service, ModelMapper mapper) {
         this.service = service;
+        this.mapper = mapper;
     }
 
     @GetMapping(value = "/getAuthorName/{name}")
@@ -27,8 +30,9 @@ public class AuthorController {
     }
 
     @PostMapping(value = "/saveAuthor")
-    public ResponseEntity<?> saveAuthor(@RequestBody Author author){
-        return ResponseEntity.ok(service.save(author));
+    public ResponseEntity<?> saveAuthor(
+            @RequestBody AuthorDto author){
+        return ResponseEntity.ok(service.save(mapper.map(author,Author.class)));
     }
 
     @DeleteMapping(value = "/deleteAuthor/{authorName}")
