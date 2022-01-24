@@ -21,7 +21,7 @@ public class BalanceDAO extends BaseEntity {
     private Long id;
 
     @Column(name = "amount")
-    private String amount;
+    private double amount;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "users_id",nullable = false)

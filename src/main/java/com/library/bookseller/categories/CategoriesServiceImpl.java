@@ -7,7 +7,6 @@ import com.library.bookseller.model.ResponseType;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-@Service
 public class CategoriesServiceImpl implements CategoriesService{
 
     private final CategoriesRepository repository;

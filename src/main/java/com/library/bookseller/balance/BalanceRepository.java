@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BalanceRepository extends JpaRepository<BalanceDAO,Long> {
+    BalanceDAO findBalanceDAOByAmount(double amount);
 }
