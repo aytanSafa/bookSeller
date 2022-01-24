@@ -1,17 +1,19 @@
 package com.library.bookseller.categories;
 
-import com.library.bookseller.exceptions.AuthorServiceException;
 import com.library.bookseller.exceptions.CategoriesServiceException;
 import com.library.bookseller.exceptions.generic.BookSellerException;
 import com.library.bookseller.model.ResponseType;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Service
 public class CategoriesServiceImpl implements CategoriesService{
 
     private final CategoriesRepository repository;
     private final ModelMapper mapper;
 
+    @Autowired
     public CategoriesServiceImpl(CategoriesRepository repository, ModelMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
@@ -20,6 +22,7 @@ public class CategoriesServiceImpl implements CategoriesService{
 
     @Override
     public ResponseType save(Categories category) {
+
         if(repository.findCategoriesByCategoryName(category.getCategoryName()) == null){
             repository.save(category);
         }

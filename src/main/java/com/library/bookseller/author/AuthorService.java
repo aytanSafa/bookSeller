@@ -3,6 +3,7 @@ package com.library.bookseller.author;
 import com.library.bookseller.model.ResponseType;
 import com.library.bookseller.service.Services;
 
+
 public interface AuthorService extends Services {
 
     ResponseType save(Author author);

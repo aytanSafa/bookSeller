@@ -5,8 +5,10 @@ import com.library.bookseller.exceptions.generic.BookSellerException;
 import com.library.bookseller.model.ResponseType;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class AuthorServiceImpl implements AuthorService{
 
     private final AuthorRepository repository;
