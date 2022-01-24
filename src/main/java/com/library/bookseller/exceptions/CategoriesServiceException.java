@@ -3,13 +3,13 @@ package com.library.bookseller.exceptions;
 import com.library.bookseller.exceptions.generic.BookSellerException;
 import org.springframework.http.HttpStatus;
 
-public class AuthorServiceException extends BookSellerException {
+public class CategoriesServiceException extends BookSellerException {
 
 
     public enum Exception{
 
-        AUTHOR_NOT_FOUND(  "Author Not Found", HttpStatus.NOT_FOUND),
-        AUTHOR_ALREADY_EXIST("Author aldready exist", HttpStatus.CONFLICT);
+        CATEGORY_NOT_FOUND(  "Category Not Found", HttpStatus.NOT_FOUND),
+        CATEGORY_ALREADY_EXIST("Category already exist", HttpStatus.CONFLICT);
 
         private final String message;
         private final HttpStatus httpStatus;
@@ -27,8 +27,7 @@ public class AuthorServiceException extends BookSellerException {
             return httpStatus;
         }
     }
-
-    public AuthorServiceException(String message,HttpStatus httpStatus) {
+    public CategoriesServiceException(String message, HttpStatus httpStatus) {
         super(message,httpStatus);
     }
 }

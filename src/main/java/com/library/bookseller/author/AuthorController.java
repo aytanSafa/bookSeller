@@ -1,6 +1,5 @@
 package com.library.bookseller.author;
 
-import com.library.bookseller.model.Models;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 public class AuthorController {
 
     private final AuthorService service;
-
 
     @Autowired
     public AuthorController(AuthorService service) {
@@ -30,8 +28,7 @@ public class AuthorController {
 
     @PostMapping(value = "/saveAuthor")
     public ResponseEntity<?> saveAuthor(@RequestBody Author author){
-        Models<Author> authorModels = new Models<>(author);
-        return ResponseEntity.ok(service.save(authorModels));
+        return ResponseEntity.ok(service.save(author));
     }
 
     @DeleteMapping(value = "/deleteAuthor/{authorName}")

@@ -2,15 +2,11 @@ package com.library.bookseller.author;
 
 import com.library.bookseller.exceptions.AuthorServiceException;
 import com.library.bookseller.exceptions.generic.BookSellerException;
-import com.library.bookseller.model.Models;
 import com.library.bookseller.model.ResponseType;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
-@Service
 public class AuthorServiceImpl implements AuthorService{
 
     private final AuthorRepository repository;
@@ -40,9 +36,7 @@ public class AuthorServiceImpl implements AuthorService{
     }
 
     @Override
-    public ResponseType save(Models<?> request) {
-       Author author = (Author) request.getObj();
-
+    public ResponseType save(Author author) {
        if(repository.findAuthorByAuthorName(author.getAuthorName()) == null){
            repository.save(author);
        }
@@ -50,7 +44,7 @@ public class AuthorServiceImpl implements AuthorService{
     }
 
     @Override
-    public ResponseType update(Models<?> request) {
+    public ResponseType update(Author author) {
         return null;
     }
 
@@ -69,7 +63,7 @@ public class AuthorServiceImpl implements AuthorService{
         return new ResponseType("deleted") ;
     }
 
-    private BookSellerException buildException(AuthorServiceException.Exception exception, Object... params) {
+    private BookSellerException buildException(AuthorServiceException.Exception exception) {
         return new AuthorServiceException(exception.getMessage(), exception.getHttpStatus());
     }
 
