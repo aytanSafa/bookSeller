@@ -51,6 +51,7 @@ public class UsersDAO  extends BaseEntity {
 /*
     @OneToMany(mappedBy = "users")
     private List<BookDAO> books = new ArrayList<>();
+
  */
 
 }

@@ -95,7 +95,7 @@ public class BookServiceImpl implements BookService {
     public boolean deleteByName(String name) {
         return true;
     }
-    
+
     private BookSellerException buildException(BookServiceException.Exception exception) {
         return new BookServiceException(exception.getMessage(), exception.getHttpStatus());
     }
