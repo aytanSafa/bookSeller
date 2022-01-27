@@ -22,7 +22,7 @@ public class BookController {
 
     @PostMapping(value = "/addbook")
     public ResponseEntity<?> add(@RequestBody BookSaveRequest request){
-       return ResponseEntity.ok(service.save(request));
+       return ResponseEntity.ok(service.save(request,"Safa"));
     }
 
 }

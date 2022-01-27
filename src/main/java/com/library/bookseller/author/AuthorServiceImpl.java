@@ -1,11 +1,12 @@
 package com.library.bookseller.author;
 
+import com.library.bookseller.author.dto.AuthorSaveReqDto;
+import com.library.bookseller.author.dto.AuthorResDto;
+import com.library.bookseller.author.dto.AuthorUpdReqDto;
 import com.library.bookseller.exceptions.AuthorServiceException;
 import com.library.bookseller.exceptions.generic.BookSellerException;
-import com.library.bookseller.model.ResponseType;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,16 +22,25 @@ public class AuthorServiceImpl implements AuthorService{
     }
 
     @Override
-    public AuthorDto getAuthorDto(String name) {
+    public AuthorResDto getAuthorDtoByName(String name) {
         Author author = repository.findAuthorByAuthorName(name);
         if(author == null){
             throw buildException(AuthorServiceException.Exception.AUTHOR_NOT_FOUND);
         }
-        return mapper.map(author,AuthorDto.class);
+        return mapper.map(author, AuthorResDto.class);
+    }
+
+
+    @Override
+    public AuthorResDto getAuthorDtoById(long id) {
+        Author author = repository.findById(id).orElseThrow(
+                () -> buildException(AuthorServiceException.Exception.AUTHOR_NOT_FOUND)
+        );
+        return mapper.map(author, AuthorResDto.class);
     }
 
     @Override
-    public Author getAuthor(String name) {
+    public Author getAuthorByName(String name) {
         Author author = repository.findAuthorByAuthorName(name);
         if(author == null){
             throw buildException(AuthorServiceException.Exception.AUTHOR_NOT_FOUND);
@@ -39,50 +49,53 @@ public class AuthorServiceImpl implements AuthorService{
     }
 
     @Override
-    public AuthorDto getAuthorDto(long id) {
-        Author author = repository.findById(id).orElseThrow(
-                () -> buildException(AuthorServiceException.Exception.AUTHOR_NOT_FOUND)
-        );
-        return mapper.map(author,AuthorDto.class);
+    public Author getAuthorById(long id) {
+        return repository.findById(id).orElseThrow(
+                () -> buildException(AuthorServiceException.Exception.AUTHOR_NOT_FOUND));
     }
 
     @Override
-    public Author getAuthor(long id) {
-        return    repository.findById(id).orElseThrow(
-                () -> buildException(AuthorServiceException.Exception.AUTHOR_NOT_FOUND)
-        );
+    public boolean existsAuthor(String name) {
+        return repository.existsAuthorByAuthorName(name);
     }
 
     @Override
-    public ResponseType save(Author author) {
-       if(repository.findAuthorByAuthorName(author.getAuthorName()) == null){
-           repository.save(author);
+    public AuthorResDto save(AuthorSaveReqDto author) {
+       if(repository.findAuthorByAuthorName(author.getAuthorName()) != null) {
+           throw buildException(AuthorServiceException.Exception.AUTHOR_ALREADY_EXIST);
        }
-       return new ResponseType("Saved");
+       return mapper.map(mapper.map(author,Author.class),AuthorResDto.class);
     }
 
     @Override
-    public ResponseType update(Author author) {
-        return null;
+    public AuthorResDto update(AuthorUpdReqDto author) {
+        if(!repository.existsById(author.getId())){
+           throw  buildException(AuthorServiceException.Exception.AUTHOR_NOT_FOUND);
+        }
+        Author oldAuthor = repository.getById(author.getId());
+        oldAuthor.setAuthorName(author.getAuthorName());
+        Author newAuthor =repository.save(oldAuthor);
+        return mapper.map(newAuthor,AuthorResDto.class);
     }
 
     @Override
-    public ResponseType delete(long id) {
-        return null;
+    public boolean deleteById(long id) {
+        if(!repository.existsById(id)){
+            throw buildException(AuthorServiceException.Exception.AUTHOR_NOT_FOUND);
+        }
+        repository.deleteById(id);
+        return true ;
     }
 
     @Override
-    public ResponseType delete(String name) {
-
+    public boolean deleteByName(String name) {
        if(repository.findAuthorByAuthorName(name) == null) {
-           buildException(AuthorServiceException.Exception.AUTHOR_NOT_FOUND);
+          throw  buildException(AuthorServiceException.Exception.AUTHOR_NOT_FOUND);
        }
         repository.deleteAuthorByAuthorName(name);
-        return new ResponseType("deleted") ;
+        return true;
     }
-
     private BookSellerException buildException(AuthorServiceException.Exception exception) {
         return new AuthorServiceException(exception.getMessage(), exception.getHttpStatus());
     }
-
 }

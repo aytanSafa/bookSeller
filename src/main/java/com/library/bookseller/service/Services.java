@@ -1,12 +1,10 @@
 package com.library.bookseller.service;
 
-import com.library.bookseller.model.ResponseType;
-
 public interface Services {
 
-    ResponseType delete(long id);
+    boolean deleteById(long id);
 
-    ResponseType delete(String name);
+    boolean deleteByName(String name);
 
 
 }

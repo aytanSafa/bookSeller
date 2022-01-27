@@ -13,7 +13,7 @@ import lombok.ToString;
 public class BookSaveRequest {
 
     private String bookName;
-    private int quatity;
+    private int quantity;
     private double price;
     private String authorName;
     private String categoryName;

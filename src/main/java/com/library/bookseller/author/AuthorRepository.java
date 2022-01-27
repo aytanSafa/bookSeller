@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 public interface AuthorRepository extends JpaRepository<Author,Long> {
     Author findAuthorByAuthorName(String name);
     void deleteAuthorByAuthorName(String name);
+    boolean existsAuthorByAuthorName(String name);
 }

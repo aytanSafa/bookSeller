@@ -10,5 +10,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class BalanceDto {
+    private long id;
     private double amount;
 }

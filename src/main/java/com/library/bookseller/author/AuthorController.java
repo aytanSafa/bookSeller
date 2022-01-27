@@ -1,5 +1,6 @@
 package com.library.bookseller.author;
 
+import com.library.bookseller.author.dto.AuthorSaveReqDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,27 +21,24 @@ public class AuthorController {
 
     @GetMapping(value = "/getAuthorName/{name}")
     public ResponseEntity<?> getAuthor(@PathVariable(value = "name") String name) {
-        return ResponseEntity.ok(service.getAuthor(name));
+        return ResponseEntity.ok(service.getAuthorByName(name));
 
     }
 
     @GetMapping(value = "/getAuthorId/{id}")
     public ResponseEntity<?> getAuthor(@PathVariable(value = "id") long id){
-        return ResponseEntity.ok(service.getAuthor(id));
+        return ResponseEntity.ok(service.getAuthorDtoById(id));
     }
 
     @PostMapping(value = "/saveAuthor")
     public ResponseEntity<?> saveAuthor(
-            @RequestBody AuthorDto author){
-        return ResponseEntity.ok(service.save(mapper.map(author,Author.class)));
+            @RequestBody AuthorSaveReqDto author){
+        return ResponseEntity.ok(service.save(author));
     }
 
     @DeleteMapping(value = "/deleteAuthor/{authorName}")
     public ResponseEntity<?> deleteAuthor(@PathVariable String authorName){
-        return ResponseEntity.ok(service.delete(authorName));
+        return ResponseEntity.ok(service.getAuthorDtoByName(authorName));
     }
-
-
-
 
 }

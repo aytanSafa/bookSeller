@@ -6,7 +6,10 @@ import com.library.bookseller.service.Services;
 
 public interface BalanceService  extends Services {
 
-    BalanceDAO getAmount(long id);
+    BalanceDto getAmount(long id);
+    BalanceDto getAmountByUserId();
+    BalanceDto update(BalanceDto balanceDto);
     ResponseType save (BalanceDto balanceDto);
+
 
 }

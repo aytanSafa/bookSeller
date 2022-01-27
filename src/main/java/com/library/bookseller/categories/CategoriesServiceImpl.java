@@ -1,11 +1,14 @@
 package com.library.bookseller.categories;
 
+import com.library.bookseller.categories.dto.CategoriesSaveReqDto;
+import com.library.bookseller.categories.dto.CategoriesResDto;
+import com.library.bookseller.categories.dto.CategoriesUpdReqDto;
 import com.library.bookseller.exceptions.CategoriesServiceException;
 import com.library.bookseller.exceptions.generic.BookSellerException;
-import com.library.bookseller.model.ResponseType;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class CategoriesServiceImpl implements CategoriesService{
@@ -21,38 +24,48 @@ public class CategoriesServiceImpl implements CategoriesService{
 
 
     @Override
-    public ResponseType save(Categories category) {
+    public CategoriesResDto save(CategoriesSaveReqDto category) {
 
-        if(repository.findCategoriesByCategoryName(category.getCategoryName()) == null){
-            repository.save(category);
+        if(repository.findCategoriesByCategoryName(category.getCategoryName()) != null){
+           throw buildException(CategoriesServiceException.Exception.CATEGORY_ALREADY_EXIST);
         }
-        return new ResponseType("Saved");
+        return mapper.map(repository.save(mapper.map(category,Categories.class)),CategoriesResDto.class);
     }
 
     @Override
-    public ResponseType update(Categories category) {
-        return null;
+    public CategoriesResDto update(CategoriesUpdReqDto category) {
+
+        if(!repository.existsById(category.getId())){
+            throw buildException(CategoriesServiceException.Exception.CATEGORY_NOT_FOUND);
+        }
+         Categories oldCategories  =repository.getById(category.getId());
+         oldCategories.setCategoryName(category.getCategoryName());
+        return mapper.map(oldCategories,CategoriesResDto.class);
     }
 
+
     @Override
-    public CategoriesDto getCategoryDto(String name) {
+    public CategoriesResDto getCategoryDtoByName(String name) {
         Categories categories = repository.findCategoriesByCategoryName(name);
+
         if(categories == null){
             throw buildException(CategoriesServiceException.Exception.CATEGORY_NOT_FOUND);
         }
-        return mapper.map(categories,CategoriesDto.class);
+        return mapper.map(categories, CategoriesResDto.class);
     }
 
     @Override
-    public CategoriesDto getCategoryDto(long id) {
+    public CategoriesResDto getCategoryDtoById(long id) {
         Categories categories = repository.findById(id).orElseThrow(
                 () -> buildException(CategoriesServiceException.Exception.CATEGORY_NOT_FOUND)
         );
-        return mapper.map(categories,CategoriesDto.class);
+
+        return mapper.map(categories, CategoriesResDto.class);
+
     }
 
     @Override
-    public Categories getCategory(String name) {
+    public Categories getCategoryByName(String name) {
         Categories categories = repository.findCategoriesByCategoryName(name);
         if(categories == null){
             throw buildException(CategoriesServiceException.Exception.CATEGORY_NOT_FOUND);
@@ -61,24 +74,38 @@ public class CategoriesServiceImpl implements CategoriesService{
     }
 
     @Override
-    public Categories getCategory(long id) {
-        return   repository.findById(id).orElseThrow(
+    public Categories getCategoryById(long id) {
+        return  repository.findById(id).orElseThrow(
                 () -> buildException(CategoriesServiceException.Exception.CATEGORY_NOT_FOUND)
         );
     }
 
     @Override
-    public ResponseType delete(long id) {
-        return null;
+    public List<Categories> findBooksByCategories(String name) {
+        return repository.findAllByCategoryName(name);
     }
 
     @Override
-    public ResponseType delete(String name) {
+    public boolean existCategory(String name) {
+        return repository.existsCategoriesByCategoryName(name);
+    }
+
+    @Override
+    public boolean deleteById(long id) {
+        if(!repository.existsById(id)){
+            throw buildException(CategoriesServiceException.Exception.CATEGORY_NOT_FOUND);
+        }
+        repository.deleteById(id);
+        return true;
+    }
+
+    @Override
+    public boolean deleteByName(String name) {
         if(repository.findCategoriesByCategoryName(name) == null){
-            buildException(CategoriesServiceException.Exception.CATEGORY_NOT_FOUND);
+            throw buildException(CategoriesServiceException.Exception.CATEGORY_NOT_FOUND);
         }
         repository.deleteCategoriesByCategoryName(name);
-        return new ResponseType("deleted");
+        return true;
     }
 
     private BookSellerException buildException(CategoriesServiceException.Exception exception) {

@@ -9,12 +9,12 @@ import java.util.List;
 
 @Repository
 public interface BookRepository extends JpaRepository<BookDAO,Long> {
-
+/*
     List<BookDAO> findAllByUsers_Id(long id);
 
     @Query("select b from BookDAO b where b.users.id <> : userId")
     List<BookDAO> findAllByUsersNot(@Param("userId")long id);
-
+*/
     List<BookDAO> findByBookName(String name);
 
 

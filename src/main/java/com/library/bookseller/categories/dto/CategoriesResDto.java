@@ -1,4 +1,4 @@
-package com.library.bookseller.categories;
+package com.library.bookseller.categories.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,8 +9,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class CategoriesDto {
-
+public class CategoriesResDto {
+    private long id;
     private String categoryName;
-
 }

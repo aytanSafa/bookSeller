@@ -21,6 +21,10 @@ public class CategoriesController {
 
     @GetMapping(value = "/getByName/{name}")
     public ResponseEntity<?> getCategoryByName (@PathVariable(value = "name") String name){
-        return ResponseEntity.ok(service.getCategory(name));
+        return ResponseEntity.ok(service.getCategoryDtoByName(name));
+    }
+    @GetMapping(value = "/findAll/{name}")
+    public ResponseEntity<?> findAllByCategoryName(@PathVariable(value = "name")String name){
+        return ResponseEntity.ok(service.findBooksByCategories(name));
     }
 }

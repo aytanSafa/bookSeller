@@ -19,9 +19,20 @@ public class BalanceServiceImpl implements BalanceService{
         this.mapper = mapper;
     }
 
+
     @Override
-    public BalanceDAO getAmount(long id) {
-        return repository.findBalanceDAOById(id);
+    public BalanceDto getAmount(long id) {
+        return null;
+    }
+
+    @Override
+    public BalanceDto getAmountByUserId() {
+        return null;
+    }
+
+    @Override
+    public BalanceDto update(BalanceDto balanceDto) {
+        return null;
     }
 
     @Override
@@ -31,19 +42,16 @@ public class BalanceServiceImpl implements BalanceService{
 
     }
 
+
+
     @Override
-    public ResponseType delete(long id) {
-        if(repository.findById(id) == null){
-            throw buildException(BalanceServiceException.Exception.BALANCE_NOT_FOUND);
-        }
-        return new ResponseType("deleted");
+    public boolean deleteById(long id) {
+        return false;
     }
 
-
-
     @Override
-    public ResponseType delete(String name) {
-        return null;
+    public boolean deleteByName(String name) {
+        return false;
     }
 
     private BookSellerException buildException(BalanceServiceException.Exception balanceServiceException){
