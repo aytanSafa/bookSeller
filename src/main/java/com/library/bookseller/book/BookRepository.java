@@ -1,8 +1,6 @@
 package com.library.bookseller.book;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,9 +13,8 @@ public interface BookRepository extends JpaRepository<BookDAO,Long> {
     @Query("select b from BookDAO b where b.users.id <> : userId")
     List<BookDAO> findAllByUsersNot(@Param("userId")long id);
 */
+    boolean existsByBookName(String name);
+
     List<BookDAO> findByBookName(String name);
-
-
-
 
 }

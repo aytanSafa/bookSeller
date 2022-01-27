@@ -27,6 +27,9 @@ public class BookDAO extends BaseEntity {
     @Column(name = "book_name")
     private String bookName;
 
+    @Column(name= "description")
+    private String description;
+
     @Column(name = "quantity")
     private int quantity;
 

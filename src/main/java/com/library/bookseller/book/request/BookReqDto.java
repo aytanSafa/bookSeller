@@ -10,9 +10,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @Data
 @ToString
-public class BookSaveRequest {
+public class BookReqDto {
 
     private String bookName;
+    private String description;
     private int quantity;
     private double price;
     private String authorName;

@@ -2,13 +2,16 @@ package com.library.bookseller.book;
 
 import com.library.bookseller.author.Author;
 import com.library.bookseller.author.AuthorService;
-import com.library.bookseller.book.request.BookSaveRequest;
+import com.library.bookseller.book.request.BookReqDto;
+import com.library.bookseller.book.request.BookResDto;
+import com.library.bookseller.book.request.BookUpdDto;
 import com.library.bookseller.categories.CategoriesService;
 import com.library.bookseller.exceptions.BookServiceException;
 import com.library.bookseller.exceptions.generic.BookSellerException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 
 @Service
@@ -27,8 +30,9 @@ public class BookServiceImpl implements BookService {
     }
 
 
+    @Transactional
     @Override
-    public BookDAO save(BookSaveRequest bookDto,String userName) {
+    public BookResDto save(BookReqDto bookDto, String userName) {
 
         BookDAO bookDAO = new BookDAO();
 
@@ -39,7 +43,6 @@ public class BookServiceImpl implements BookService {
         }else {
             bookDAO.setAuthor(authorService.getAuthorByName(bookDto.getAuthorName()));
         }
-        //----------------------------------------------------------//
 
         if(!categoriesService.existCategory(bookDto.getCategoryName())){
             throw buildException(BookServiceException.Exception.WRONG_CATEGORY);
@@ -51,13 +54,50 @@ public class BookServiceImpl implements BookService {
         bookDAO.setCategory(categoriesService.getCategoryByName(bookDto.getCategoryName()));
         bookDAO.setCreatedAt(new Date());
         bookDAO.setCreatedBy(userName);
-
-
-        return repository.save(bookDAO);
+        return mapper.map(repository.save(bookDAO),BookResDto.class);
     }
 
+    @Override
+    public BookResDto update(BookUpdDto bookUpdDto, String userName) {
 
+        if(!repository.existsById(bookUpdDto.getId())){
+            throw buildException(BookServiceException.Exception.BOOK_NOT_FOUND);
+        }
+        BookDAO book = repository.getById(bookUpdDto.getId());
+        book.setBookName(bookUpdDto.getBookName());
+        book.setQuantity(bookUpdDto.getQuantity());
+        book.setPrice(bookUpdDto.getPrice());
+        book.setDescription(book.getDescription());
+        book.setUpdatedAt(new Date());
+        book.setUpdatedBy(userName);
+        return mapper.map(repository.save(book),BookResDto.class);
+
+    }
+
+    @Override
+    public BookResDto getBookById(long id) {
+        if(!repository.existsById(id)){
+            throw  buildException(BookServiceException.Exception.BOOK_NOT_FOUND);
+        }
+        return mapper.map(repository.getById(id),BookResDto.class);
+    }
+
+    @Override
+    public boolean deleteById(long id) {
+        if(!repository.existsById(id)){
+            throw buildException(BookServiceException.Exception.BOOK_NOT_FOUND);
+        }
+        repository.deleteById(id);
+        return true;
+    }
+
+    @Override
+    public boolean deleteByName(String name) {
+        return true;
+    }
+    
     private BookSellerException buildException(BookServiceException.Exception exception) {
         return new BookServiceException(exception.getMessage(), exception.getHttpStatus());
     }
+
 }
