@@ -3,13 +3,16 @@ package com.library.bookseller.users;
 import com.library.bookseller.balance.BalanceDAO;
 import com.library.bookseller.book.BookDAO;
 import com.library.bookseller.entity.BaseEntity;
+import com.library.bookseller.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Users")
@@ -37,8 +40,8 @@ public class UsersDAO  extends BaseEntity {
     @Column(name = "surname")
     private String surname;
 
-    @Column(name = "adress")
-    private String adress;
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "age")
     private int age;
@@ -46,8 +49,16 @@ public class UsersDAO  extends BaseEntity {
     @Column(name = "email")
     private String email;
 
-    @OneToOne(mappedBy = "users")
+    @OneToOne(mappedBy = "users",cascade = CascadeType.ALL)
     private BalanceDAO balance;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(	name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
+
 /*
     @OneToMany(mappedBy = "users")
     private List<BookDAO> books = new ArrayList<>();
