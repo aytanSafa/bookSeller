@@ -49,6 +49,7 @@ public class UsersDAO  extends BaseEntity {
     @Column(name = "email")
     private String email;
 
+    //
     @OneToOne(mappedBy = "users",cascade = CascadeType.ALL)
     private BalanceDAO balance;
 
