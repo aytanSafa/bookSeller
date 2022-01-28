@@ -1,5 +1,7 @@
 package com.library.bookseller.book;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.library.bookseller.author.Author;
 import com.library.bookseller.categories.Categories;
 import com.library.bookseller.entity.BaseEntity;
@@ -25,24 +27,29 @@ public class BookDAO extends BaseEntity {
     @Column(name = "book_name")
     private String bookName;
 
+    @Column(name= "description")
+    private String description;
+
     @Column(name = "quantity")
     private int quantity;
 
     @Column(name = "price")
     private double price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonManagedReference
     @JoinColumn(name = "author_id",nullable = false)
     private Author author;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id",nullable = false)
+    @JsonManagedReference
     private Categories category;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+/*
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "users_id",nullable = false)
     private UsersDAO users;
-
+*/
 
 }
