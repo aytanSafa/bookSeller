@@ -3,7 +3,6 @@ package com.library.bookseller.users;
 import com.library.bookseller.balance.BalanceDAO;
 import com.library.bookseller.book.BookDAO;
 import com.library.bookseller.entity.BaseEntity;
-import com.library.bookseller.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -58,6 +57,7 @@ public class UsersDAO  extends BaseEntity {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
 
 
 /*
