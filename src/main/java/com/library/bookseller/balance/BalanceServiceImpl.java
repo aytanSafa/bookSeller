@@ -2,7 +2,6 @@ package com.library.bookseller.balance;
 
 import com.library.bookseller.exceptions.generic.BalanceServiceException;
 import com.library.bookseller.exceptions.generic.BookSellerException;
-import com.library.bookseller.model.ResponseType;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,12 +34,6 @@ public class BalanceServiceImpl implements BalanceService{
         return null;
     }
 
-    @Override
-    public ResponseType save(BalanceDto balanceDto) {
-        repository.save(mapper.map(balanceDto,BalanceDAO.class));
-        return new ResponseType("saved");
-
-    }
 
 
 

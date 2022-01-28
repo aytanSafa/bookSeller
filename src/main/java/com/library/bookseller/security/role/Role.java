@@ -1,4 +1,4 @@
-package com.library.bookseller.role;
+package com.library.bookseller.security.role;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

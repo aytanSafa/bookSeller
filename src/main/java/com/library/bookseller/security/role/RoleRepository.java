@@ -1,4 +1,4 @@
-package com.library.bookseller.role;
+package com.library.bookseller.security.role;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
