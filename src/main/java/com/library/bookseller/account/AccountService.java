@@ -7,7 +7,7 @@ import com.library.bookseller.users.dto.UserRegisterReqDto;
 import com.library.bookseller.users.dto.UserRegisterResDto;
 import org.springframework.stereotype.Service;
 
-@Service
+
 public interface AccountService {
 
     UserRegisterResDto registerUser(UserRegisterReqDto userRegisterReqDto);

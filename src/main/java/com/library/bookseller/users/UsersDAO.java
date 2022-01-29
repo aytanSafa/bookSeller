@@ -28,7 +28,7 @@ public class UsersDAO  extends BaseEntity {
     @Column(name = "username",unique = true,length = 10)
     private String username;
 
-    @Column(name = "password",length = 8)
+    @Column(name = "password")
     private String password;
 
     @Column(name = "name")

@@ -19,10 +19,8 @@ public class AccountController {
 
 
     @PostMapping(value = "/login")
-    public ResponseEntity<?> login(AccountLoginDto accountDto){
-
-
-        return null;
+    public ResponseEntity<?> login(@RequestBody AccountLoginDto accountDto){
+        return ResponseEntity.ok(accountService.login(accountDto));
     }
 
     @PostMapping("/register")

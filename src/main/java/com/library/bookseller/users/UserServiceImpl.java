@@ -10,6 +10,7 @@ import com.library.bookseller.users.dto.UserRegisterReqDto;
 import com.library.bookseller.users.dto.UserRegisterResDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,12 +23,15 @@ public class UserServiceImpl implements UserService{
     private final UsersRepository usersRepository;
     private final RoleRepository roleRepository;
     private final ModelMapper mapper;
+    private final PasswordEncoder encoder;
+
 
     @Autowired
-    public UserServiceImpl(UsersRepository usersRepository, RoleRepository roleRepository, ModelMapper mapper) {
+    public UserServiceImpl(UsersRepository usersRepository, RoleRepository roleRepository, ModelMapper mapper, PasswordEncoder encoder) {
         this.usersRepository = usersRepository;
         this.roleRepository = roleRepository;
         this.mapper = mapper;
+        this.encoder = encoder;
     }
 
     @Transactional
@@ -40,7 +44,16 @@ public class UserServiceImpl implements UserService{
                 throw   buildException(UserServiceException.Exception.USER_ALREADY_EXIST);
             }
 
-            UsersDAO newUser = mapper.map(userRegisterReqDto,UsersDAO.class);
+            UsersDAO newUser = new UsersDAO();
+            newUser.setUsername(userRegisterReqDto.getUsername());
+            newUser.setPassword(encoder.encode(userRegisterReqDto.getPassword()));
+            newUser.setEmail(userRegisterReqDto.getEmail());
+            newUser.setAddress(userRegisterReqDto.getAddress());
+            newUser.setSurname(userRegisterReqDto.getSurname());
+            newUser.setName(userRegisterReqDto.getName());
+            newUser.setAge(userRegisterReqDto.getAge());
+            newUser.setName(userRegisterReqDto.getName());
+
             BalanceDAO balanceDAO = new BalanceDAO();
             balanceDAO.setAmount(0);
             newUser.setBalance(balanceDAO);
@@ -84,7 +97,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Boolean existsByEmail(String email) {
-        return existsByEmail(email);
+        return usersRepository.existsByEmail(email);
     }
 
     private BookSellerException buildException(UserServiceException.Exception exception) {

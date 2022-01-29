@@ -17,7 +17,6 @@ public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     private long id;
-
     private String username;
     private String email;
     @JsonIgnore
@@ -39,7 +38,7 @@ public class UserDetailsImpl implements UserDetails {
                 authorities);
     }
 
-        @Override
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
