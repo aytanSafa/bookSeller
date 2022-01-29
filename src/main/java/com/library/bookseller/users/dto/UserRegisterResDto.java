@@ -1,6 +1,9 @@
 package com.library.bookseller.users.dto;
 
+import com.library.bookseller.security.role.Role;
 import lombok.Data;
+
+import java.util.Set;
 
 @Data
 public class UserRegisterResDto {
@@ -14,6 +17,7 @@ public class UserRegisterResDto {
     private int age;
     private String email;
     private double amount;
+    private Set<Role> roles;
 
 
 }

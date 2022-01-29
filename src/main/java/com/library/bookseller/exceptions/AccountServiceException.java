@@ -1,17 +1,17 @@
+
 package com.library.bookseller.exceptions;
 
 import com.library.bookseller.exceptions.generic.BookSellerException;
 import org.springframework.http.HttpStatus;
 
-public class UserServiceException extends BookSellerException {
+public class AccountServiceException extends BookSellerException {
 
 
     public enum Exception{
 
         USER_NOT_FOUND(  "User Not Found", HttpStatus.NOT_FOUND),
-        USER_ALREADY_EXIST("Username already exist", HttpStatus.CONFLICT),
-        EMAIL_ALREADY_EXIST("Email is already taken",HttpStatus.CONFLICT),
-        ROLE_NOT_FOUND("Role is not found",HttpStatus.NOT_FOUND);
+        USER_ALREADY_EXIST("Username is already taken", HttpStatus.CONFLICT),
+        EMAIL__ALREADY_EXIST("Email is already taken",HttpStatus.CONFLICT);
 
         private final String message;
         private final HttpStatus httpStatus;
@@ -30,7 +30,7 @@ public class UserServiceException extends BookSellerException {
         }
     }
 
-    public UserServiceException(String message, HttpStatus httpStatus) {
+    public AccountServiceException(String message, HttpStatus httpStatus) {
         super(message,httpStatus);
     }
 }
