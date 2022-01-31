@@ -7,6 +7,7 @@ import lombok.ToString;
 @ToString
 public class UserUpdateReqDto {
 
+    private long id;
     private String name;
     private String surname;
     private String address;

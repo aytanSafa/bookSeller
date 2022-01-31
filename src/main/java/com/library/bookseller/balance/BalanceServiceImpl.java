@@ -19,23 +19,13 @@ public class BalanceServiceImpl implements BalanceService{
     }
 
 
-    @Override
-    public BalanceDto getAmount(long id) {
-        return null;
-    }
-
-    @Override
-    public BalanceDto getAmountByUserId() {
-        return null;
-    }
 
     @Override
     public BalanceDto update(BalanceDto balanceDto) {
-        return null;
+        BalanceDAO balanceDAO =repository.findBalanceDAOByUsers_Id(balanceDto.getId()).orElseThrow(() -> buildException(BalanceServiceException.Exception.BALANCE_NOT_FOUND));
+        balanceDAO.setAmount(balanceDto.getAmount());
+        return mapper.map(balanceDAO,BalanceDto.class);
     }
-
-
-
 
     @Override
     public boolean deleteById(long id) {

@@ -8,12 +8,15 @@ import com.library.bookseller.security.role.Role;
 import com.library.bookseller.security.role.RoleRepository;
 import com.library.bookseller.users.dto.UserRegisterReqDto;
 import com.library.bookseller.users.dto.UserRegisterResDto;
+import com.library.bookseller.users.dto.UserUpdateReqDto;
+import com.library.bookseller.users.dto.UserUpdateResDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -98,6 +101,35 @@ public class UserServiceImpl implements UserService{
     @Override
     public Boolean existsByEmail(String email) {
         return usersRepository.existsByEmail(email);
+    }
+
+    @Override
+    public UserUpdateResDto updateUser(UserUpdateReqDto updateReqDto) {
+
+            UsersDAO oldUser = usersRepository.findById(updateReqDto.getId()).orElseThrow(() -> buildException(UserServiceException.Exception.ROLE_NOT_FOUND));
+
+            oldUser.setName(updateReqDto.getName());
+            oldUser.setUsername(updateReqDto.getSurname());
+            oldUser.setAddress(updateReqDto.getAddress());
+            oldUser.setAge(updateReqDto.getAge());
+            oldUser.setEmail(updateReqDto.getEmail());
+            oldUser.setUpdatedAt(new Date());
+            oldUser.setUpdatedBy(oldUser.getUsername());
+
+            return mapper.map( usersRepository.save(oldUser),UserUpdateResDto.class);
+    }
+
+    @Override
+    public boolean deleteById(long id) {
+        usersRepository.findById(id).orElseThrow(() -> buildException(UserServiceException.Exception.USER_NOT_FOUND));
+        usersRepository.deleteById(id);
+        return true;
+    }
+
+    @Override
+    public UserUpdateResDto getById(long id) {
+        usersRepository.findById(id).orElseThrow(() -> buildException(UserServiceException.Exception.USER_NOT_FOUND));
+        return mapper.map(usersRepository.getById(id),UserUpdateResDto.class);
     }
 
     private BookSellerException buildException(UserServiceException.Exception exception) {
