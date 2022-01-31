@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<BookDAO,Long> {
@@ -17,4 +18,7 @@ public interface BookRepository extends JpaRepository<BookDAO,Long> {
 
     List<BookDAO> findByBookName(String name);
 
+    Optional<BookDAO> findByBookNameAndUsers_Id(String bookName, long usersId);
+
+    List<BookDAO> findAllByUsers_Id(long users_id);
 }

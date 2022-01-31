@@ -19,6 +19,7 @@ public interface UserService {
     UserUpdateResDto updateUser(UserUpdateReqDto updateReqDto);
     boolean deleteById(long id);
     UserUpdateResDto getById(long id);
+    UsersDAO findById(long id);
 
 
 }

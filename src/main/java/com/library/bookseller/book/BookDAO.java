@@ -46,10 +46,10 @@ public class BookDAO extends BaseEntity {
     @JoinColumn(name = "category_id",nullable = false)
     @JsonManagedReference
     private Categories category;
-/*
+
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "users_id",nullable = false)
     private UsersDAO users;
-*/
+
 
 }

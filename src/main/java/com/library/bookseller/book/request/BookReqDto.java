@@ -12,6 +12,7 @@ import lombok.ToString;
 @ToString
 public class BookReqDto {
 
+    private long userId;
     private String bookName;
     private String description;
     private int quantity;

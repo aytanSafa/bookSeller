@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService{
                throw  buildException(UserServiceException.Exception.USER_ALREADY_EXIST);
             }
             if(existsByEmail(userRegisterReqDto.getEmail())){
-                throw   buildException(UserServiceException.Exception.USER_ALREADY_EXIST);
+                throw   buildException(UserServiceException.Exception.EMAIL_ALREADY_EXIST);
             }
 
             UsersDAO newUser = new UsersDAO();
@@ -130,6 +130,11 @@ public class UserServiceImpl implements UserService{
     public UserUpdateResDto getById(long id) {
         usersRepository.findById(id).orElseThrow(() -> buildException(UserServiceException.Exception.USER_NOT_FOUND));
         return mapper.map(usersRepository.getById(id),UserUpdateResDto.class);
+    }
+
+    @Override
+    public UsersDAO findById(long id) {
+        return usersRepository.findById(id).orElseThrow(() -> buildException(UserServiceException.Exception.USER_NOT_FOUND));
     }
 
     private BookSellerException buildException(UserServiceException.Exception exception) {
